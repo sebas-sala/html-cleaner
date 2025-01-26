@@ -1,6 +1,6 @@
-# html-cleaner
+# html-scrubber
 
-`html-cleaner` is a simple Python library built with BeautifulSoup that allows you to clean HTML content by removing unwanted tags such as styles, scripts, iframes, and more. It's ideal for web scraping, data extraction, or sanitizing HTML content before further processing.
+`html-scrubber` is a simple Python library built with BeautifulSoup that allows you to clean HTML content by removing unwanted tags such as styles, scripts, iframes, and more. It's ideal for web scraping, data extraction, or sanitizing HTML content before further processing.
 
 ## Features
 
@@ -11,18 +11,18 @@
 
 ## Installation
 
-To install `html-cleaner`, you can use pip:
+To install `html-scrubber`, you can use pip:
 
 ```bash
-pip install html-cleaner
+pip install html-scrubber
 ```
 
 ## Usage
 
-Here is an example of how to use the `html-cleaner` library to clean HTML content:
+Here is an example of how to use the `html-scrubber` library to clean HTML content:
 
 ```python
-from html_cleaner import clean_html
+from html_scrubber import clean_html
 
 raw_html = """
 <html>

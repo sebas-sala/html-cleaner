@@ -1,6 +1,6 @@
 import unittest
 
-from html_cleaner import clean_html
+from html_scrubber import clean_html
 
 
 class TestHTMLCleaner(unittest.TestCase):
