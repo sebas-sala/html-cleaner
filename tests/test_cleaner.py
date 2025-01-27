@@ -83,7 +83,7 @@ class TestHTMLCleaner(unittest.TestCase):
     </html>
     """
         cleaned = clean_html(
-            html, addional_tags=["custom", "div"], return_as_string=True
+            html, tags=["custom", "div"], return_as_string=True
         )
         assert "<custom>" not in cleaned
         assert "<div>" not in cleaned
@@ -109,11 +109,11 @@ class TestHTMLCleaner(unittest.TestCase):
 
     def test_clean_html_invalid_additional_tags(self):
         with self.assertRaises(ValueError):
-            clean_html("test", addional_tags="test")
+            clean_html("test", tags="test")
 
     def test_clean_html_invalid_additional_tags_elements(self):
         with self.assertRaises(ValueError):
-            clean_html("test", addional_tags=[123])
+            clean_html("test", tags=[123])
 
 
 if __name__ == "__main__":

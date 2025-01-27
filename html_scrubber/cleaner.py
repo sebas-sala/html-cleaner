@@ -5,11 +5,10 @@ def clean_html(
     html_content: str,
     remove_styles: bool = True,
     remove_scripts: bool = True,
-    remove_svgs: bool = True,
     remove_noscripts: bool = True,
     remove_iframes: bool = True,
     remove_metas: bool = True,
-    addional_tags: list[str] = [],
+    tags: list[str] = [],
     return_as_string: bool = False,
 ) -> BeautifulSoup | str:
     """
@@ -19,7 +18,6 @@ def clean_html(
     html_content (str): The HTML content to clean.
     remove_styles (bool): Remove style tags.
     remove_scripts (bool): Remove script tags.
-    remove_svgs (bool): Remove svg tags.
     remove_noscripts (bool): Remove noscript tags.
     remove_iframes (bool): Remove iframe tags.
     remove_metas (bool): Remove meta tags.
@@ -37,7 +35,6 @@ def clean_html(
     bool_params = [
         ("remove_styles", remove_styles),
         ("remove_scripts", remove_scripts),
-        ("remove_svgs", remove_svgs),
         ("remove_noscripts", remove_noscripts),
         ("remove_iframes", remove_iframes),
         ("remove_metas", remove_metas),
@@ -48,34 +45,29 @@ def clean_html(
         if not isinstance(param_value, bool):
             raise ValueError(f"{param_name} must be a boolean.")
 
-    if not isinstance(addional_tags, list):
+    if not isinstance(tags, list):
         raise ValueError("addional_tags must be a list.")
 
-    for tag in addional_tags:
+    for tag in tags:
         if not isinstance(tag, str):
             raise ValueError(
                 f"Each element in addional_tags must be a string. Found {type(tag)}."
             )
 
+    tag_mapping = {
+        'style': remove_styles,
+        'script': remove_scripts,
+        'noscript': remove_noscripts,
+        'iframe': remove_iframes,
+        'meta': remove_metas
+    }
+
+    elements_to_remove = [tag for tag, should_remove in tag_mapping.items() if should_remove]
+
+    elements_to_remove.extend(tags)
     soup = BeautifulSoup(html_content, "html.parser")
-
-    elements_to_remove = []
-    if remove_styles:
-        elements_to_remove.append("style")
-    if remove_scripts:
-        elements_to_remove.append("script")
-    if remove_svgs:
-        elements_to_remove.append("svg")
-    if remove_noscripts:
-        elements_to_remove.append("noscript")
-    if remove_iframes:
-        elements_to_remove.append("iframe")
-    if remove_metas:
-        elements_to_remove.append("meta")
-
-    elements_to_remove.extend(addional_tags)
 
     for element in soup.find_all(elements_to_remove):
         element.decompose()
 
-    return soup if not return_as_string else str(soup)
+    return str(soup) if return_as_string else soup
